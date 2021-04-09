@@ -149,6 +149,7 @@ for(cohort.i in 1:length(cohort.sql)){
               " (", cohort.i, " of ", length(cohort.sql), ")"))
   sql<-readSql(here("OutcomeCohorts", "sql",cohort.sql[cohort.i])) 
   sql<-SqlRender::translate(sql, targetDialect = targetDialect)
+  sql <- sub("BEGIN: Inclusion Impact Analysis - event.*END: Inclusion Impact Analysis - person", "", sql)  # fixing error when test=FALSE
   renderTranslateExecuteSql(conn=conn, 
                           sql, 
                           cdm_database_schema = cdm_database_schema,
